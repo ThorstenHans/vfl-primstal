@@ -16,10 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@v6
+      - name: Setup Node
+        uses: action/setup-node@v6
+        with:
+          node-version: 25.9.0
+          cache: npm
       - name: Install, build, and upload your site
         uses: withastro/action@v3
+        with:
+          node-vserion: 25.9.0
+          package-manager: npm
 
   deploy:
     needs: build
