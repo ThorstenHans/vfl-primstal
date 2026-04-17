@@ -25,12 +25,12 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/vflprimstal",
   },
   nav: [
-    { label: "Über uns", href: "/my-repo/#about" },
-    { label: "Teams", href: "/my-repo/#teams" },
-    { label: "Chronik", href: "/my-repo/chronik" },
-    { label: "Vorstand", href: "/my-repo/vorstand" },
-    { label: "Stadion", href: "/my-repo/#location" },
-    { label: "Kontakt", href: "/my-repo/#contact" },
+    { label: "Über uns", href: "/vfl-primstal/#about" },
+    { label: "Teams", href: "/vfl-primstal/#teams" },
+    { label: "Chronik", href: "/vfl-primstal/chronik" },
+    { label: "Vorstand", href: "/vfl-primstal/vorstand" },
+    { label: "Stadion", href: "/vfl-primstal/#location" },
+    { label: "Kontakt", href: "/vfl-primstal/#contact" },
   ],
   teams: [
     {
