@@ -6,28 +6,31 @@ export interface VorstandMember {
   imageUrl: string;
 }
 
-export const vorstand: VorstandMember[] = [
+export const praesidium: VorstandMember[] = [
   {
-    firstname: "Alwin",
-    lastname: "Arm",
-    position: "1. Vorsitzender",
+    firstname: "Timo",
+    lastname: "Horn",
+    position: "Vorsitzender",
     email: "vorsitzender@vfl-primstal.de",
     imageUrl: "/placeholder-person.svg",
   },
   {
-    firstname: "Dietmar",
-    lastname: "Scheid",
-    position: "2. Vorsitzender",
+    firstname: "Thomas",
+    lastname: "Paulus",
+    position: "Vorsitzender",
     email: "stellvertreter@vfl-primstal.de",
     imageUrl: "/placeholder-person.svg",
   },
   {
-    firstname: "Franz-Josef",
-    lastname: "Backes",
-    position: "Geschäftsführer",
+    firstname: "Christoph",
+    lastname: "Holz",
+    position: "Vorsitzender",
     email: "geschaeftsfuehrer@vfl-primstal.de",
     imageUrl: "/placeholder-person.svg",
   },
+];
+
+export const members: VorstandMember[] = [
   {
     firstname: "Julius",
     lastname: "Wiesen",
