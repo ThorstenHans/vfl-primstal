@@ -1,0 +1,230 @@
+---
+import MapSVG from "./MapSVG.astro";
+---
+
+<section id="location" class="location">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Unser Stadion</h2>
+      <p class="section-subtitle">Das Allerswaldstadion – unser Zuhause seit 1959.</p>
+    </div>
+
+    <div class="location-grid">
+      <!-- Left: Info card -->
+      <div class="info-card">
+        <h3 class="stadium-name">Allerswaldstadion</h3>
+        <div class="red-divider"></div>
+
+        <div class="address-block">
+          <div class="address-row">
+            <span class="address-icon">📍</span>
+            <span class="address-text">Am Schwimmbad 10</span>
+          </div>
+          <div class="address-row">
+            <span class="address-icon">🏙️</span>
+            <span class="address-text">66620 Nonnweiler-Primstal</span>
+          </div>
+          <div class="address-row">
+            <span class="address-icon">🗺️</span>
+            <span class="address-text">Saarland, Deutschland</span>
+          </div>
+        </div>
+
+        <a
+          href="https://www.google.com/maps/search/Allerswaldstadion+Primstal"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary map-btn"
+        >
+          In Google Maps öffnen &rarr;
+        </a>
+      </div>
+
+      <!-- Right: Map placeholder -->
+      <div class="map-placeholder">
+        <!-- Vector map fills the full area -->
+        <div class="map-svg-layer" aria-hidden="true">
+          <MapSVG />
+        </div>
+        <!-- Info overlay stays on top -->
+        <div class="map-inner">
+          <span class="map-pin-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#c8102e" width="36" height="36">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+          </span>
+          <p class="map-stadium">Allerswaldstadion</p>
+          <p class="map-address">Am Schwimmbad 10<br />66620 Nonnweiler-Primstal</p>
+          <a
+            href="https://www.google.com/maps/search/Allerswaldstadion+Primstal"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="map-open-link"
+          >
+            Karte öffnen &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location {
+    background: var(--color-bg);
+    padding: 6rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .location-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  /* Left - info card */
+  .info-card {
+    background: var(--color-surface);
+    border-radius: 12px;
+    padding: 2.5rem;
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .stadium-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .red-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--color-red);
+    margin-top: -0.75rem;
+  }
+
+  .address-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .address-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .address-icon {
+    font-size: 1rem;
+    color: var(--color-red);
+    min-width: 1.25rem;
+  }
+
+  .address-text {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .map-btn {
+    align-self: flex-start;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  /* Right - map placeholder */
+  .map-placeholder {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    position: relative;
+    background-color: #131313;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SVG layer fills the whole box */
+  .map-svg-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+  }
+
+  .map-svg-layer svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Overlay sits on top, centred */
+  .map-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.4rem;
+    padding: 1.5rem;
+    background: rgba(15, 15, 15, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    border: 1px solid rgba(200, 16, 46, 0.18);
+    margin: auto;
+    width: fit-content;
+    max-width: 80%;
+  }
+
+  .map-pin-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .map-stadium {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .map-address {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .map-open-link {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-red);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .map-open-link:hover {
+    color: var(--color-red-light);
+    text-decoration: underline;
+  }
+</style>

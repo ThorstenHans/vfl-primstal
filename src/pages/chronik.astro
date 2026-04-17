@@ -1,0 +1,277 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const milestones = [
+  { year: "1931", text: "Gründungsversammlung Mitte des Jahres. Johann Müller wird zum 1. Vorsitzenden gewählt. Erster Sportplatz auf dem Wiesengelände in der „Klaus“.", highlight: true },
+  { year: "1934", text: "Fusion mit der DJK Primstal. Matthias Collet übernimmt das Amt des 1. Vorsitzenden.", highlight: false },
+  { year: "1936", text: "Ein einzigartiges Kuriosum der Vereinsgeschichte: Der VfL Primstal erringt in einem Jahr gleich drei Meisterschaften.", highlight: false },
+  { year: "1937", text: "Erste Meisterschaft einer Primstaler Mannschaft durch die A-Jugend.", highlight: false },
+  { year: "1945/46", text: "Wiedergründung des Vereins nach dem 2. Weltkrieg (15.09.1945). Umbenennung zu „Kickers Primstal“ auf Anweisung der Alliierten, da Vereinsnamen nicht an die Zeit vor 1933 erinnern durften.", highlight: false },
+  { year: "1953", text: "Rückbenennung in „Verein für Leibesübungen Primstal“ auf Beschluss der Generalversammlung. Meisterschaft in der Kreisklasse II und Aufstieg in die Kreisklasse I.", highlight: false },
+  { year: "1956", text: "25-jähriges Vereinsjubiläum.", highlight: false },
+  { year: "1959", text: "Einweihung des neuen Sportplatzes im „Allerswald“ mit Umkleidekabinen und Schulungsräumen am 15. August.", highlight: true },
+  { year: "1965", text: "Das bis dahin erfolgreichste Jahr: Aufstieg der 1. Mannschaft in die 2. Amateurliga. Meisterschaft der 2. Mannschaft. Die C-Jugend wird Gruppen-, Staffel-, Kreis- und Saarlandmeister.", highlight: true },
+  { year: "1970", text: "Bau der Flutlichtanlage – der einzigen in der gesamten Region – vollständig in Eigenregie und durch Spenden der Vereinsmitglieder finanziert.", highlight: false },
+  { year: "1971", text: "40-jähriges Vereinsjubiläum. Schirmherr: Justizminister Alois Becker – selbst Vereinsmitglied.", highlight: false },
+  { year: "1976", text: "Die Damenmannschaft des VfL wird Meister und steigt in die höchste saarländische Spielklasse auf.", highlight: false },
+  { year: "1978", text: "Meister der B-Klasse und Aufstieg in die Bezirksliga Nord.", highlight: false },
+  { year: "1981", text: "Meister der Bezirksliga Nord und Aufstieg in die Landesliga Nord-Ost. 50-jähriges Vereinsjubiläum. Schirmherr: Ministerpräsident Werner Zeyer.", highlight: true },
+  { year: "1985", text: "Herausgabe der Vereinszeitung „Allerswald-Echo“.", highlight: false },
+  { year: "1991", text: "60-jähriges Vereinsjubiläum. Schirmherr: Finanzminister Hans Kasper. Alwin Arm wird zum 1. Vorsitzenden gewählt.", highlight: false },
+  { year: "1994", text: "Meister der Bezirksliga Nord und Aufstieg in die Landesliga Nord-Ost. A-Jugend wird Saarlandpokalsieger; im DFB-Pokal Niederlage gegen den FC Augsburg.", highlight: false },
+  { year: "1996", text: "VfL Primstal erhält die Anerkennungsurkunde der „Sepp-Herberger-Stiftung“ für hervorragende Jugendarbeit.", highlight: false },
+  { year: "1999", text: "Bau des Kunstrasenplatzes. Die 1. Mannschaft besiegt im Saarlandpokal den Regionalligisten FC Homburg.", highlight: false },
+  { year: "2000", text: "Offizielle Einweihung des neuen Kunstrasenplatzes am 4. August.", highlight: false },
+  { year: "2001", text: "70-jähriges Vereinsjubiläum. Schirmherr: Landrat Franz-Josef Schumann. Fertigstellung des Sportlerheim-Anbaus.", highlight: true },
+  { year: "2006", text: "75-jähriges Vereinsjubiläum. Schirmherr: Ministerpräsident Peter Müller.", highlight: true },
+  { year: "2010", text: "Sportlich eines der erfolgreichsten Jahre. Zahlreiche Jugendmeisterschaften. Gründung der JFG Schaumberg-Prims. Ministerin Annegret Kramp-Karrenbauer als Ehrengast bei der Meisterschaftsfeier.", highlight: true },
+  { year: "2011", text: "80-jähriges Vereinsjubiläum. Schirmherr: Landrat Udo Recktenwald.", highlight: false },
+  { year: "2012", text: "Erneuerung des Kunstrasenplatzes. A- und C-Jugend der JFG steigen in die Regionalliga Südwest auf.", highlight: false },
+  { year: "2013", text: "Größter sportlicher Erfolg in der Vereinsgeschichte: Die 1. Mannschaft wird Meister der Verbandsliga Nord und steigt in die Saarlandliga – die höchste saarländische Amateurliga – auf.", highlight: true },
+  { year: "2014", text: "Im ersten Saarlandliga-Jahr ein hervorragender 6. Tabellenplatz. 2. Mannschaft steigt in die Landesliga Nord auf. Erster Auto-Schwinn-Cup ausgetragen.", highlight: false },
+  { year: "2016", text: "Das beste Jahr der Vereinshistorie: 1. Mannschaft belegt Platz 3 in der Karlsbergliga. 2. Mannschaft wird Meister der Landesliga Nord und steigt in die Verbandsliga auf.", highlight: false },
+  { year: "2017", text: "85-jähriges Vereinsjubiläum. Sensationeller 2. Platz in der Karlsbergliga vor 3.000 Zuschauern im Allerswaldstadion – beste Platzierung der Vereinsgeschichte. A-Jugend der JFG wird Meister der Verbandsliga.", highlight: true },
+  { year: "2018", text: "Einzug in die 5. Runde des Saarlandpokals (1:3 gegen 1. FC Saarbrücken). Renovierung des Clubheims.", highlight: false },
+  { year: "2019", text: "Jugendfüballcamp mit der Fundación Real Madrid. Kamera-Installation für Live-Übertragungen auf Sporttotal.", highlight: false },
+  { year: "2020", text: "Besuch der Evonik Fußballakademie von Borussia Dortmund im Allerswaldstadion. Corona-bedingte Saisonabbrüche.", highlight: false },
+];
+---
+<Layout
+  title="Chronik – VfL Primstal"
+  description="Die Geschichte des VfL Primstal von 1931 bis heute. Meisterschaften, Jubiläen und unvergessliche Momente."
+>
+  <Header />
+  <main>
+    <section class="chronik-hero">
+      <div class="container">
+        <span class="badge">Gegründet 1931</span>
+        <h1 class="hero-title">Unsere Geschichte</h1>
+        <p class="hero-subtitle">
+          Über 90 Jahre Leidenschaft, Zusammenhalt und Fußball im Herzen des Saarlandes.
+          Eine Reise durch die Meilensteine des VfL Primstal.
+        </p>
+      </div>
+    </section>
+
+    <section class="timeline-section">
+      <div class="container">
+        <div class="timeline">
+          {milestones.map((entry) => (
+            <div class={"timeline-entry" + (entry.highlight ? " timeline-entry--highlight" : "")}>
+              <div class="timeline-year">
+                <span>{entry.year}</span>
+              </div>
+              <div class="timeline-connector">
+                <div class="connector-dot"></div>
+                <div class="connector-line"></div>
+              </div>
+              <div class="timeline-content">
+                {entry.highlight ? (
+                  <div class="timeline-card">{entry.text}</div>
+                ) : (
+                  <p class="timeline-text">{entry.text}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .chronik-hero {
+    padding: calc(var(--header-height) + 5rem) 0 5rem;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(200, 16, 46, 0.12) 0%, transparent 60%),
+      var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--color-red-glow);
+    color: var(--color-red);
+    border: 1px solid var(--color-border-accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    max-width: 580px;
+    line-height: 1.7;
+  }
+
+  .timeline-section {
+    padding: 5rem 0 6rem;
+    background: var(--color-bg);
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 860px;
+  }
+
+  .timeline-entry {
+    display: grid;
+    grid-template-columns: 90px 36px 1fr;
+    gap: 0 1.25rem;
+    align-items: start;
+    min-height: 3rem;
+  }
+
+  .timeline-year {
+    text-align: right;
+    padding-top: 0.2rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .timeline-year span {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-red);
+    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timeline-entry--highlight .timeline-year span {
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  .timeline-connector {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .connector-dot {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--color-red);
+    border-radius: 50%;
+    border: 2px solid var(--color-bg);
+    box-shadow: 0 0 0 2px var(--color-red-dark);
+    margin-top: 0.35rem;
+    z-index: 1;
+  }
+
+  .timeline-entry--highlight .connector-dot {
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 0 2px var(--color-red), 0 0 12px rgba(200, 16, 46, 0.4);
+    margin-top: 0.25rem;
+  }
+
+  .connector-line {
+    flex: 1;
+    width: 2px;
+    background: var(--color-border);
+    margin-top: 4px;
+    min-height: 2rem;
+  }
+
+  .timeline-entry:last-child .connector-line {
+    display: none;
+  }
+
+  .timeline-content {
+    padding-bottom: 1.75rem;
+  }
+
+  .timeline-text {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    padding-top: 0.15rem;
+  }
+
+  .timeline-card {
+    background: var(--color-surface);
+    border-left: 3px solid var(--color-red);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease;
+  }
+
+  .timeline-card:hover {
+    background: var(--color-surface-hover);
+  }
+
+  @media (max-width: 600px) {
+    .timeline-entry {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--color-border);
+      position: relative;
+    }
+
+    .timeline-entry--highlight {
+      border-left-color: var(--color-red);
+    }
+
+    .timeline-connector {
+      display: none;
+    }
+
+    .timeline-year {
+      text-align: left;
+      padding-top: 0;
+      padding-bottom: 0.25rem;
+    }
+
+    .timeline-year span {
+      font-size: 1rem;
+    }
+
+    .timeline-content {
+      padding-bottom: 1.5rem;
+    }
+
+    .timeline-entry::before {
+      content: "";
+      position: absolute;
+      left: -5px;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      background: var(--color-red-dark);
+      border-radius: 50%;
+      border: 2px solid var(--color-bg);
+    }
+
+    .timeline-entry--highlight::before {
+      background: var(--color-red);
+      box-shadow: 0 0 8px rgba(200, 16, 46, 0.5);
+    }
+  }
+</style>

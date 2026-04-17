@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#1c1c1c"/>
+
+  <!-- Head circle -->
+  <circle cx="100" cy="74" r="36" fill="#272727"/>
+
+  <!-- Shoulders / body shape -->
+  <path d="M18,200 C18,148 52,122 100,122 C148,122 182,148 182,200 Z"
+        fill="#222222"/>
+
+  <!-- Subtle red accent bar at bottom -->
+  <rect x="0" y="193" width="200" height="7" fill="#c8102e"/>
+</svg>

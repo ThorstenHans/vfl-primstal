@@ -1,0 +1,228 @@
+---
+import { siteConfig } from "../config/site";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo-link">
+          <img
+            src={siteConfig.club.logoUrl}
+            alt="VfL Primstal Logo"
+            class="footer-logo"
+            width="52"
+            height="52"
+          />
+          <span class="footer-club-name">{siteConfig.club.name}</span>
+        </a>
+        <p class="footer-tagline">Seit {siteConfig.club.foundedYear}</p>
+        <p class="footer-address">
+          {siteConfig.club.address.street}<br />
+          {siteConfig.club.address.city}
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h3 class="footer-heading">Navigation</h3>
+        <ul>
+          {siteConfig.nav.map((item) => (
+            <li>
+              <a href={item.href} class="footer-link">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-social-col">
+        <h3 class="footer-heading">Folgt uns</h3>
+        <div class="social-links">
+          <a
+            href={siteConfig.social.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            aria-label="VfL Primstal auf Facebook"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span>Facebook</span>
+          </a>
+          <a
+            href={siteConfig.social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            aria-label="VfL Primstal auf Instagram"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+            <span>Instagram</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; {currentYear} {siteConfig.club.fullName}. Alle Rechte vorbehalten.
+      </p>
+      <div class="legal-links">
+        <a href="/impressum" class="legal-link">Impressum</a>
+        <span class="divider" aria-hidden="true">&middot;</span>
+        <a href="/datenschutz" class="legal-link">Datenschutz</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--color-bg-alt, #141414);
+    border-top: 1px solid var(--color-border);
+    padding: 3.5rem 0 2rem;
+    margin-top: auto;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    text-decoration: none;
+  }
+
+  .footer-logo {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer-club-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .footer-tagline {
+    color: var(--color-red);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-address {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  .footer-heading {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-link {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-link:hover {
+    color: var(--color-red);
+  }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .social-link:hover {
+    color: var(--color-red);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .copyright {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+  }
+
+  .legal-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .legal-link {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .legal-link:hover {
+    color: var(--color-red);
+  }
+
+  .divider {
+    color: var(--color-border);
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+</style>

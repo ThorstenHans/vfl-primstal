@@ -1,0 +1,259 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Post {
+  index: number;
+  filename: string;
+  caption: string;
+  permalink: string;
+  timestamp: string;
+  mediaType: string;
+}
+
+// Import metadata — the file always exists (starts as [] before first scraper run)
+import postsRaw from '../data/instagram.json';
+const posts = postsRaw as Post[];
+
+// Glob all downloaded images at build time
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/images/instagram/*.jpg',
+  { eager: true }
+);
+
+// Pair each post with its resolved ImageMetadata
+const feedItems = posts
+  .map((post) => ({
+    ...post,
+    imageData: imageModules[`/src/images/instagram/${post.filename}`]?.default ?? null,
+  }))
+  .filter((item): item is typeof item & { imageData: ImageMetadata } => item.imageData !== null);
+
+const hasData = feedItems.length > 0;
+
+function formatDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString('de-DE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  } catch {
+    return '';
+  }
+}
+---
+
+<section id="instagram">
+  <div class="container">
+    <h2 class="section-title">Folgt uns auf Instagram</h2>
+    <p class="section-subtitle">
+      @vflprimstal &mdash; Spieltage, Training &amp; Eindrücke aus dem Vereinsleben.
+    </p>
+
+    {hasData ? (
+      <!-- Real Instagram feed -->
+      <div class="feed-grid">
+        {feedItems.map((item) => (
+          <a
+            href={item.permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="feed-item"
+            aria-label={item.caption || `Instagram-Beitrag vom ${formatDate(item.timestamp)}`}
+          >
+            <div class="feed-img-wrap">
+              <Image
+                src={item.imageData}
+                alt={item.caption || `VfL Primstal Instagram-Beitrag`}
+                class="feed-img"
+                width={400}
+                height={400}
+              />
+              <div class="feed-overlay">
+                {item.caption && (
+                  <p class="feed-caption">{item.caption}</p>
+                )}
+                <span class="feed-date">{formatDate(item.timestamp)}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <!-- Placeholder — shown before the first scraper run -->
+      <div class="placeholder-grid">
+        {Array.from({ length: 9 }).map((_, i) => (
+          <div class="placeholder-tile" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="placeholder-icon">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <div class="cta-row">
+      <a
+        href="https://www.instagram.com/vflprimstal"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="instagram-btn"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+        Auf Instagram folgen
+      </a>
+      {!hasData && (
+        <p class="pending-note">Live-Feed wird nach dem ersten Scraper-Lauf angezeigt.</p>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    background: var(--color-bg-alt);
+    padding: 6rem 0;
+  }
+
+  /* -- Real feed grid ---------------------------------------- */
+  .feed-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    max-width: 780px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .feed-item {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    aspect-ratio: 1;
+    background: var(--color-surface);
+  }
+
+  .feed-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .feed-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .feed-item:hover .feed-img {
+    transform: scale(1.05);
+  }
+
+  .feed-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.85rem;
+  }
+
+  .feed-item:hover .feed-overlay {
+    opacity: 1;
+  }
+
+  .feed-caption {
+    color: #fff;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+  }
+
+  .feed-date {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  /* -- Placeholder grid -------------------------------------- */
+  .placeholder-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    max-width: 780px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .placeholder-tile {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: linear-gradient(
+      135deg,
+      var(--color-surface) 0%,
+      var(--color-surface-hover) 50%,
+      var(--color-surface) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-icon {
+    width: 28px;
+    height: 28px;
+    color: rgba(144, 144, 144, 0.25);
+  }
+
+  /* -- CTA row ----------------------------------------------- */
+  .cta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .instagram-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+  }
+
+  .instagram-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  .pending-note {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+  }
+
+  /* -- Responsive -------------------------------------------- */
+  @media (max-width: 600px) {
+    .feed-grid,
+    .placeholder-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+  }
+</style>

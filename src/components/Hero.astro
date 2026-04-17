@@ -1,0 +1,152 @@
+---
+// Hero.astro
+---
+
+<section class="hero">
+  <img
+    src="https://www.vfl-primstal.de/wp-content/uploads/2018/08/Logo_vfl_middle-289x300.png"
+    alt=""
+    class="hero-watermark"
+    aria-hidden="true"
+  />
+  <div class="hero-content">
+    <span class="badge">Gegründet 1931</span>
+    <h1><span class="accent">VfL</span> Primstal</h1>
+    <p class="tagline">Herzblut. Leidenschaft. Fußball.</p>
+    <p class="description">
+      Seit 1931 leben wir Fußball im Herzen des Saarlandes. Der VfL Primstal
+      steht für Leidenschaft, Gemeinschaft und sportliche Exzellenz – auf dem
+      Platz und abseits davon.
+    </p>
+    <div class="hero-actions">
+      <a href="/#about" class="btn-primary">Mehr erfahren</a>
+      <a href="/chronik" class="btn-outline">Zur Chronik</a>
+    </div>
+  </div>
+  <div class="scroll-indicator" aria-hidden="true">
+    <span class="scroll-arrow">&#8595;</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: var(--header-height);
+    background-color: var(--color-bg);
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.015) 0px,
+        rgba(255,255,255,0.015) 1px,
+        transparent 1px,
+        transparent 40px
+      ),
+      radial-gradient(
+        ellipse at 50% 60%,
+        rgba(200,16,46,0.12) 0%,
+        transparent 70%
+      );
+    overflow: hidden;
+  }
+
+  .hero-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(300px, 40vw, 500px);
+    height: auto;
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid var(--color-border-accent);
+    background: var(--color-red-glow);
+    color: var(--color-red);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .accent {
+    color: var(--color-red);
+  }
+
+  .tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .description {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  .scroll-arrow {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 1.5rem;
+    animation: bounce 2s ease-in-out infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+</style>

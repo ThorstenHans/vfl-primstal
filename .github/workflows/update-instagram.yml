@@ -1,0 +1,75 @@
+name: Update Instagram Feed
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # Daily at 06:00 UTC
+  workflow_dispatch:        # Allow manual runs from the GitHub UI
+
+permissions:
+  contents: write           # Required to commit images back to the repo
+
+jobs:
+  update-feed:
+    if: false   # Disabled - re-enable once INSTAGRAM_ACCESS_TOKEN secret is set
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+          cache-dependency-path: ig-scraper/go.mod
+
+      - name: Build ig-scraper
+        working-directory: ig-scraper
+        run: go build -o ig-scraper-bin .
+
+      - name: Run ig-scraper
+        run: |
+          ./ig-scraper/ig-scraper-bin \
+            --output . \
+            --count 9 \
+            --token-out /tmp/refreshed_token.txt
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+
+      # Rotate the GitHub secret if the token changed after refresh.
+      # Requires GH_PAT secret with secrets:write scope.
+      - name: Rotate token secret (if changed)
+        if: hashFiles("/tmp/refreshed_token.txt") != ""
+        continue-on-error: true   # Don't fail the whole run if GH_PAT isn't set
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          CURRENT_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: |
+          NEW_TOKEN=$(cat /tmp/refreshed_token.txt)
+          if [ "$NEW_TOKEN" != "$CURRENT_TOKEN" ]; then
+            echo "Token has changed - updating repository secret..."
+            gh secret set INSTAGRAM_ACCESS_TOKEN --body "$NEW_TOKEN"
+            echo "Secret updated."
+          else
+            echo "Token unchanged, no secret rotation needed."
+          fi
+
+      - name: Stage generated files
+        id: diff
+        run: |
+          git add src/images/instagram/ src/data/instagram.json
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes detected - feed is already up to date."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected."
+          fi
+
+      - name: Commit and push
+        if: steps.diff.outputs.changed == "true"
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: update Instagram feed [skip ci]"
+          git push origin HEAD

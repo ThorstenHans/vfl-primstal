@@ -1,0 +1,147 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { siteConfig } from "../config/site";
+const imp = siteConfig.impressum;
+---
+
+<Layout title="Impressum – VfL Primstal">
+  <Header />
+  <main class="legal-main">
+    <div class="container legal-container">
+      <h1 class="page-title">Impressum</h1>
+
+      <section class="legal-section">
+        <h2>Angaben gemäß § 5 TMG</h2>
+        <p>
+          {imp.clubName}<br />
+          {imp.street}<br />
+          {imp.city}
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Vertreten durch</h2>
+        <p>{imp.responsible}</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Kontakt</h2>
+        <p>
+          Telefon: {imp.phone}<br />
+          E-Mail: <a href={"mailto:" + imp.email}>{imp.email}</a>
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Registereintrag</h2>
+        <p>
+          Eingetragen im Vereinsregister.<br />
+          Registergericht: {imp.registerCourt}<br />
+          Registernummer: {imp.registerNumber}
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Haftung für Inhalte</h2>
+        <p>
+          Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach
+          den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter
+          jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen
+          oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+          Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den
+          allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst
+          ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden
+          von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Haftung für Links</h2>
+        <p>
+          Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen
+          Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen.
+          Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der
+          Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche
+          Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht
+          erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne
+          konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von
+          Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>Urheberrecht</h2>
+        <p>
+          Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem
+          deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der
+          Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des
+          jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den
+          privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht
+          vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden
+          Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine
+          Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei
+          Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+        </p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-main {
+    padding-top: calc(var(--header-height) + 3rem);
+    padding-bottom: 6rem;
+    min-height: 100vh;
+  }
+
+  .legal-container {
+    max-width: 800px;
+  }
+
+  .page-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    border-left: 4px solid var(--color-red);
+  }
+
+  .legal-section {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .legal-section:first-of-type {
+    margin-top: 3rem;
+    border-top: none;
+  }
+
+  .legal-section h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-red);
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .legal-section p {
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .legal-section a {
+    color: var(--color-red);
+    text-decoration: underline;
+  }
+
+  .legal-section a:hover {
+    color: var(--color-red-light);
+  }
+</style>
