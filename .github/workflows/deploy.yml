@@ -18,7 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Setup Node
-        uses: action/setup-node@v6
+        uses: actions/setup-node@v6
         with:
           node-version: 25.9.0
           cache: npm
